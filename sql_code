@@ -1,6 +1,6 @@
 #Adidas_Sales
 
-# Total Sales by Addidas Retailers in each US Region
+# Top Addidas Retailers in each US Region by Total Sales
 with cte as(
 SELECT 
     *, rank() over (partition by Region order by total_sales desc) as rnk
@@ -15,7 +15,7 @@ select Retailer, Region, Total_Sales from cte
 where cte.rnk = 1
 order by total_sales desc;
 
-# To find top US City for Sales and the top Addidas Retailer there
+# Top US City for Sales and the top Addidas Retailer there
 
 with cte as(
 select *, rank() over (partition by Region order by total_sales desc) as rnk from (
@@ -26,7 +26,7 @@ select inv_month, retailer, region, city, total_sales from cte
 where rnk = 1
 order by 4 desc;
 
-# To find Top Adidas Retailer and Sales_Method by Total Units Sold
+# Top Adidas Retailer and Sales_Method as per Total Units Sold
 
 with cte as(
 select *, dense_rank() over (partition by retailer order by total_units desc) as rnk from (
@@ -36,7 +36,7 @@ select retailer, sales_method, total_units from cte
 where rnk = 1
 order by 3 desc;
 
-# To find Top Adidas Retailer, US City and Sales_Method by Total Units Sold
+# Top Adidas Retailer, Product, US City and Sales_Method as per Total Units Sold
 
 with cte as(
 select *, rank() over (partition by city order by total_units desc) as rnk from (
